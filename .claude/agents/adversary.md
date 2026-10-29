@@ -1,6 +1,6 @@
 ---
 name: adversary
-description: Vaporeon (adversary). Adversarially reviews the reviewer's review of Whack-The-Mole: finds what it missed, got wrong, or overstated. Writes docs/review/round-N-adversary.md.
+description: "Vaporeon (adversary). Adversarially reviews the reviewer's review of Whack-The-Mole: finds what it missed, got wrong, or overstated. Writes docs/review/round-N-adversary.md."
 tools: Read, Glob, Grep, Bash, Write
 ---
 
