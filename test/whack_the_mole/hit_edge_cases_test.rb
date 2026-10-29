@@ -33,7 +33,7 @@ module WhackTheMole
     end
 
     def test_hit_on_center_and_just_inside_edges
-      [[0, 0], [-71, -79], [71, 63]].each do |dx, dy|
+      [[0, 0], [-24, -56], [8, 4]].each do |dx, dy|
         game = started_game
         m = game.moles.first
 
@@ -42,7 +42,7 @@ module WhackTheMole
     end
 
     def test_just_outside_is_a_miss
-      [[-73, 0], [73, 0], [0, -81], [0, 65]].each do |dx, dy|
+      [[-25, 0], [9, 0], [0, -57], [0, 5]].each do |dx, dy|
         game = started_game
         m = game.moles.first
 
@@ -73,6 +73,7 @@ module WhackTheMole
       click_head(@game, m.hole.x, m.hole.y, 3100)
 
       assert_equal 1, @game.score.hits
+      assert_equal 0, @game.score.misses
     end
 
     def test_hiding_mole_cannot_be_hit
@@ -80,7 +81,9 @@ module WhackTheMole
       hiding_at = 3000 + Mole::TRANSITION_MS + 1200 + 10
 
       assert_equal :hiding, m.phase(hiding_at)
-      assert_equal :miss, click_head(@game, m.hole.x, m.hole.y, hiding_at)
+      assert_nil click_head(@game, m.hole.x, m.hole.y, hiding_at)
+      assert_equal 0, @game.score.total
+      assert_equal 0, @game.score.misses
     end
 
     def test_whacked_mole_drops_and_gives_popup

@@ -28,7 +28,7 @@ module WhackTheMole
 
     def load
       data = JSON.parse(File.read(@path))
-      data.is_a?(Hash) && data['best'].is_a?(Integer) ? data['best'] : 0
+      data.is_a?(Hash) && data['best'].is_a?(Integer) && data['best'].positive? ? data['best'] : 0
     rescue JSON::ParserError, SystemCallError
       0
     end

@@ -53,7 +53,8 @@ module WhackTheMole
     end
 
     def contains?(x, y)
-      x.between?(left, left + Config::DRAWN_SIZE) && y.between?(top, top + Config::DRAWN_SIZE)
+      x.between?(left + Config::HIT_LEFT, left + Config::HIT_LEFT + Config::HIT_WIDTH) &&
+        y.between?(top + Config::HIT_TOP, top + Config::HIT_TOP + Config::HIT_HEIGHT)
     end
 
     def left

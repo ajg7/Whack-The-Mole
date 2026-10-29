@@ -32,7 +32,7 @@ module WhackTheMole
     def button_down(id)
       case id
       when Gosu::MS_LEFT then play_thud(@game.click(mouse_x, mouse_y, now: Gosu.milliseconds))
-      when Gosu::KB_R then @game.start(Gosu.milliseconds) if @game.state == :game_over
+      when Gosu::KB_R then restart if @game.state == :game_over
       else super
       end
     end
@@ -53,8 +53,16 @@ module WhackTheMole
       File.join(Config::ASSETS_DIR, name)
     end
 
+    def restart
+      now = Gosu.milliseconds
+      @game.hammer.swing(now)
+      @game.start(now)
+    end
+
     def load_tiles(name)
       Gosu::Image.load_tiles(asset(name), Config::SPRITE_SIZE, Config::SPRITE_SIZE, retro: true)
+    rescue RuntimeError
+      abort "Could not load image: #{asset(name)}"
     end
 
     def load_audio

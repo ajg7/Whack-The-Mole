@@ -25,7 +25,8 @@ module WhackTheMole
     def click(x, y, now:)
       hammer.swing(now)
       case state
-      when :title, :game_over then start(now)
+      when :title then start(now)
+      when :game_over then start(now) if now - @finished_at >= Config::GAME_OVER_LOCKOUT_MS
       when :playing then whack_at(*Hammer.hit_point(x, y), now)
       end
     end
@@ -56,15 +57,16 @@ module WhackTheMole
     end
 
     def update_round(now)
-      return finish_round if @round.expired?(now)
+      return finish_round(now) if @round.expired?(now)
 
       moles.reject! { |mole| mole.gone?(now) }
       popups.reject! { |popup| popup.expired?(now) }
       spawn_mole(now) if moles.size < Config::MAX_MOLES && now >= @next_spawn_at
     end
 
-    def finish_round
+    def finish_round(now)
       @state = :game_over
+      @finished_at = now
       @moles = []
       @popups = []
       @best = @high_score.record(score.total)
@@ -78,16 +80,19 @@ module WhackTheMole
     end
 
     def whack_at(x, y, now)
-      mole = moles.find { |candidate| candidate.hittable?(now) && candidate.contains?(x, y) }
-      if mole
-        mole.whack(now)
-        score.hit!
-        popups << Popup.new(x: mole.hole.x, y: mole.top, started_at: now)
-        :hit
-      else
-        score.miss!
-        :miss
-      end
+      mole = moles.find { |candidate| candidate.contains?(x, y) }
+      return miss unless mole
+      return unless mole.hittable?(now)
+
+      mole.whack(now)
+      score.hit!
+      popups << Popup.new(x: mole.hole.x, y: mole.top, started_at: now)
+      :hit
+    end
+
+    def miss
+      score.miss!
+      :miss
     end
   end
 end

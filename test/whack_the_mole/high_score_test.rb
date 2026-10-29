@@ -20,7 +20,7 @@ module WhackTheMole
 
     def test_bad_files_are_zero
       FileUtils.mkdir_p(File.dirname(@path))
-      ['not json', '[]', '{"best":"x"}', '5', ''].each do |content|
+      ['not json', '[]', '{"best":"x"}', '{"best":-4}', '{"best":2.5}', '5', ''].each do |content|
         File.write(@path, content)
 
         assert_equal 0, HighScore.new(path: @path).best, content

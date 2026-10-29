@@ -63,8 +63,8 @@ module WhackTheMole
       assert_equal :hit, @game.click(mole.hole.x, mole.hole.y, now: 3100)
       assert_equal 1, @game.score.hits
       assert_equal 1, @game.popups.size
-      assert_equal :miss, @game.click(mole.hole.x, mole.hole.y, now: 3110)
-      assert_equal 0, @game.score.total
+      assert_nil @game.click(mole.hole.x, mole.hole.y, now: 3110)
+      assert_equal 1, @game.score.total
     end
 
     def test_miss_can_go_negative

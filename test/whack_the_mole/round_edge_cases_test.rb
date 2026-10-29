@@ -105,7 +105,7 @@ module WhackTheMole
 
     def test_click_after_game_over_restarts_without_scoring
       @game.update(63_000)
-      @game.click(300, 300, now: 63_001)
+      @game.click(300, 300, now: 64_000)
 
       assert_equal :countdown, @game.state
       assert_equal 0, @game.score.total
