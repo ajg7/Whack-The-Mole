@@ -33,7 +33,7 @@ module WhackTheMole
     end
 
     def test_hit_on_center_and_just_inside_edges
-      [[0, 0], [-24, -56], [8, 4]].each do |dx, dy|
+      [[0, 0], [-32, -64], [16, 12]].each do |dx, dy|
         game = started_game
         m = game.moles.first
 
@@ -42,7 +42,7 @@ module WhackTheMole
     end
 
     def test_just_outside_is_a_miss
-      [[-25, 0], [9, 0], [0, -57], [0, 5]].each do |dx, dy|
+      [[-33, 0], [17, 0], [0, -65], [0, 13]].each do |dx, dy|
         game = started_game
         m = game.moles.first
 

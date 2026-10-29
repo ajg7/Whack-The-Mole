@@ -29,8 +29,8 @@ module WhackTheMole
       play(0)
       mole = @game.moles.first
       dx, dy = Config::HAMMER_HEAD_OFFSET
-      right = mole.hole.x + 8
-      bottom = mole.hole.y + 4
+      right = mole.hole.x + 16
+      bottom = mole.hole.y + 12
 
       assert_equal :hit, @game.click(right - dx, bottom - dy, now: 3100)
     end
@@ -40,7 +40,7 @@ module WhackTheMole
       mole = @game.moles.first
       dx, dy = Config::HAMMER_HEAD_OFFSET
 
-      assert_equal :miss, @game.click(mole.hole.x + 9 - dx, mole.hole.y - dy, now: 3100)
+      assert_equal :miss, @game.click(mole.hole.x + 17 - dx, mole.hole.y - dy, now: 3100)
     end
 
     private
