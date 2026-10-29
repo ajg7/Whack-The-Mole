@@ -14,7 +14,6 @@ module WhackTheMole
       @moles = load_tiles('mole-sheet.png')
       @hammers = load_tiles('hammer-sheet.png')
       @font = Gosu::Font.new(32)
-      @hole_image = record_hole
       @song = load_audio { Gosu::Song.new(asset('dcuttermusic-whack-a-mole-178509.mp3')) }
       @thud = load_audio { Gosu::Sample.new(asset('freesound_community-thud2-97615.mp3')) }
       @previous_state = @game.state
@@ -71,18 +70,16 @@ module WhackTheMole
       nil
     end
 
-    def record_hole
-      width = Config::HOLE_WIDTH
-      height = Config::HOLE_HEIGHT
-      Gosu.record(width, height) do
-        points = (0..HOLE_SEGMENTS).map do |i|
-          angle = 2 * Math::PI * i / HOLE_SEGMENTS
-          [(width / 2.0) * (1 + Math.cos(angle)), (height / 2.0) * (1 + Math.sin(angle))]
-        end
-        points.each_cons(2) do |(x1, y1), (x2, y2)|
-          Gosu.draw_triangle(width / 2.0, height / 2.0, Config::HOLE_COLOR,
-                             x1, y1, Config::HOLE_COLOR, x2, y2, Config::HOLE_COLOR)
-        end
+    def draw_hole(hole)
+      color = Config::HOLE_COLOR
+      radius_x = Config::HOLE_WIDTH / 2.0
+      radius_y = Config::HOLE_HEIGHT / 2.0
+      points = (0..HOLE_SEGMENTS).map do |i|
+        angle = 2 * Math::PI * i / HOLE_SEGMENTS
+        [hole.x + (radius_x * Math.cos(angle)), hole.y + (radius_y * Math.sin(angle))]
+      end
+      points.each_cons(2) do |(x1, y1), (x2, y2)|
+        Gosu.draw_triangle(hole.x, hole.y, color, x1, y1, color, x2, y2, color, 1)
       end
     end
 
@@ -100,9 +97,7 @@ module WhackTheMole
     end
 
     def draw_holes
-      Hole.grid.each do |hole|
-        @hole_image.draw(hole.x - (Config::HOLE_WIDTH / 2), hole.y - (Config::HOLE_HEIGHT / 2), 1)
-      end
+      Hole.grid.each { |hole| draw_hole(hole) }
     end
 
     def draw_moles(now)
