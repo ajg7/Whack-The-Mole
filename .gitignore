@@ -1,0 +1,11 @@
+.bundle/
+vendor/bundle/
+tmp/
+coverage/
+*.gem
+.rubocop-*
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
