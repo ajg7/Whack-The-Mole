@@ -1,0 +1,13 @@
+<h1>Top ten</h1>
+<table>
+  <tr><th>#</th><th>Player</th><th>Score</th><th>Hits</th><th>Misses</th></tr>
+  <% @scores.each_with_index do |score, i| %>
+    <tr>
+      <td><%= i + 1 %></td>
+      <td><%= score.player_name %></td>
+      <td><%= score.points %></td>
+      <td><%= score.hits %></td>
+      <td><%= score.misses %></td>
+    </tr>
+  <% end %>
+</table>
