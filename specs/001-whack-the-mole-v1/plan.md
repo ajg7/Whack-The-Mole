@@ -2,7 +2,7 @@
 
 ## 1. Context
 
-`docs/spec.md` describes v1: a 60-second whack-a-mole round on a 3x3 grid, built in Ruby with Gosu. The repo has no code yet. It holds only `assets/` (two `.aseprite` sheets and two MP3s), `docs/spec.md`, `CLAUDE.md` and `.claude/`. This code becomes Ruby teaching material later, so every choice below favors the plain, readable version: small classes named after game concepts, keyword arguments, `Data.define` for value objects, and Enumerable over index loops.
+`specs/001-whack-the-mole-v1/spec.md` describes v1: a 60-second whack-a-mole round on a 3x3 grid, built in Ruby with Gosu. The repo has no code yet. It holds only `assets/` (two `.aseprite` sheets and two MP3s), `specs/001-whack-the-mole-v1/spec.md`, `CLAUDE.md` and `.claude/`. This code becomes Ruby teaching material later, so every choice below favors the plain, readable version: small classes named after game concepts, keyword arguments, `Data.define` for value objects, and Enumerable over index loops.
 
 Facts checked locally while planning:
 - `assets/mole-Sheet.aseprite` has one frame on a 144x36 canvas, and `assets/Hammer-Sheet.aseprite` has one frame on a 108x36 canvas (read from the file headers). That means the spec's `--save-as` command gives one PNG strip each, which is what `load_tiles(…, 36, 36)` needs. (`--save-as` on a multi-frame file would write one file per frame instead.)

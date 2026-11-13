@@ -57,7 +57,7 @@ end
 - **[G3.2]** Explain frame-rate independence, and implement time-based behavior by passing the current time in and storing timestamps, not counting frames.
 
 ### Read
-`Mole#phase` and `#frame`, `Hammer#frame`, `RoundTimer`, `Game#update` and `#start`, rule 10 in `docs/spec.md`.
+`Mole#phase` and `#frame`, `Hammer#frame`, `RoundTimer`, `Game#update` and `#start`, rule 10 in `specs/001-whack-the-mole-v1/spec.md`.
 
 ### Concept
 A naive game counts frames: "the mole stays up for 72 updates". At 60 updates per second that's 1.2 s. But if the computer is slow and only manages 30, it's 2.4 s, and the game gets easier on slow machines. On a 144 Hz monitor with an uncapped loop, it's 0.5 s.
@@ -96,7 +96,7 @@ The alternative is **delta time**: each update gets `dt` (ms since last update) 
 - **[G3.3]** Model screens and entity behavior as finite state machines: name the states and transitions, keep state-dependent input and drawing in `case` statements, and act on transitions (edge detection) rather than on every update.
 
 ### Read
-`Game#update`, `#click`, `#start`, `#start_round`, `#finish_round`, `Window#draw_hud`, `Window#sync_music`, `Mole#phase`, rule 7 in `docs/spec.md`.
+`Game#update`, `#click`, `#start`, `#start_round`, `#finish_round`, `Window#draw_hud`, `Window#sync_music`, `Mole#phase`, rule 7 in `specs/001-whack-the-mole-v1/spec.md`.
 
 ### Concept
 A **finite state machine** has a fixed set of states, one current state, and rules (transitions) for moving between them. The game screen is one:
@@ -140,7 +140,7 @@ Transitions happen in exactly one place each (`start`, `start_round`, `finish_ro
 - **[G3.5]** Animate from a sprite sheet: load tiles, choose a frame index from elapsed time, play frames forward or in reverse, and scale pixel art without blurring.
 
 ### Read
-`Game#spawn_mole`, `Game#update_round`, `Mole#frame`, `Window#load_tiles`, `Window#draw_moles`, `Window#draw_hammer`, `docs/spec.md` (Assets).
+`Game#spawn_mole`, `Game#update_round`, `Mole#frame`, `Window#load_tiles`, `Window#draw_moles`, `Window#draw_hammer`, `specs/001-whack-the-mole-v1/spec.md` (Assets).
 
 ### Concept
 **Entities** are the things in the world: moles and popups here. Their lifecycle:
@@ -225,7 +225,7 @@ Two rectangles overlap (for collisions between moving things) if they overlap on
 - **[G3.8]** Shape difficulty over time with linear interpolation, keep tuning values in config, and judge a curve for fairness.
 
 ### Read
-`Game#spawn_mole`, `Game#update_round`, `RoundTimer#elapsed_fraction`, `Config` (`MAX_MOLES`, `SPAWN_INTERVAL_MS`, `UP_MS_START`, `UP_MS_END`), rules 3 and 4 in `docs/spec.md`.
+`Game#spawn_mole`, `Game#update_round`, `RoundTimer#elapsed_fraction`, `Config` (`MAX_MOLES`, `SPAWN_INTERVAL_MS`, `UP_MS_START`, `UP_MS_END`), rules 3 and 4 in `specs/001-whack-the-mole-v1/spec.md`.
 
 ### Concept
 **Spawn rules** are three questions:
@@ -301,7 +301,7 @@ Good feedback is **immediate** (same frame), **proportional** (bigger results, b
 - **[G3.11]** Decide how a game should fail: degrade gracefully for optional things (sound, saves) and fail loudly and early for essential ones (sprites).
 
 ### Read
-`CLAUDE.md` (Architecture), `lib/whack_the_mole.rb` vs `window.rb`, `Window#load_tiles`, `#load_audio`, `#play_thud`, `HighScore#save`, rules 8 and 9 in `docs/spec.md`.
+`CLAUDE.md` (Architecture), `lib/whack_the_mole.rb` vs `window.rb`, `Window#load_tiles`, `#load_audio`, `#play_thud`, `HighScore#save`, rules 8 and 9 in `specs/001-whack-the-mole-v1/spec.md`.
 
 ### Concept
 **Two layers.** The game is split in two:

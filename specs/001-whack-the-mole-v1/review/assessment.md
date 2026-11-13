@@ -1,6 +1,6 @@
 # Whack-The-Mole v1: developer assessment (Slowbro)
 
-Scope: the code the agents built from base commit `25d9134` to `04a6cc7` (round 1 build `6198f8c`, tester `17ddf57`, round 2 fixes `6c32abf`, tester `04a6cc7`), plus the reasons recorded in `docs/spec.md`, `docs/review/plan.md` and the round review, adversary, verdict, fixes and tester files. Later hand edits (hit box size, hole drawing) are not tested; questions are worded so they hold for the current code.
+Scope: the code the agents built from base commit `25d9134` to `04a6cc7` (round 1 build `6198f8c`, tester `17ddf57`, round 2 fixes `6c32abf`, tester `04a6cc7`), plus the reasons recorded in `specs/001-whack-the-mole-v1/spec.md`, `specs/001-whack-the-mole-v1/plan.md` and the round review, adversary, verdict, fixes and tester files. Later hand edits (hit box size, hole drawing) are not tested; questions are worded so they hold for the current code.
 
 20 questions, multiple choice, one correct answer each. The answer key is at the end.
 
@@ -24,7 +24,7 @@ What does the number before `* SCALE` measure, and why was the box added?
 - C. Grid cells; it lets a click anywhere in the hole's cell count as a hit.
 - D. Milliseconds; it sets how long the mole stays hittable at each edge.
 
-Source: `lib/whack_the_mole/config.rb:23-26`, `docs/review/round-2-fixes.md` (item 6), `docs/review/round-2-review.md`
+Source: `lib/whack_the_mole/config.rb:23-26`, `specs/001-whack-the-mole-v1/review/round-2-fixes.md` (item 6), `specs/001-whack-the-mole-v1/review/round-2-review.md`
 
 ### Q2. The game-over lockout (config.rb, game.rb)
 
@@ -39,7 +39,7 @@ Why does this one-second lockout exist?
 - C. A player still clicking when the timer hit 0 would restart at once and never see the game-over screen.
 - D. Gosu sends two `button_down` events per click, and the lockout drops the duplicate.
 
-Source: `lib/whack_the_mole/game.rb:29`, `lib/whack_the_mole/config.rb:30`, `docs/review/round-1-review.md` (MINOR 1), `docs/review/round-2-fixes.md` (item 1)
+Source: `lib/whack_the_mole/game.rb:29`, `lib/whack_the_mole/config.rb:30`, `specs/001-whack-the-mole-v1/review/round-1-review.md` (MINOR 1), `specs/001-whack-the-mole-v1/review/round-2-fixes.md` (item 1)
 
 ### Q3. Clicks during the countdown (game.rb)
 
@@ -50,7 +50,7 @@ What does `Game#click` do when the state is `:countdown`?
 - C. It skips the rest of the countdown and starts play.
 - D. It raises an error, because `click` has no `:countdown` branch.
 
-Source: `lib/whack_the_mole/game.rb:25-32`, `docs/spec.md` (rule 1)
+Source: `lib/whack_the_mole/game.rb:25-32`, `specs/001-whack-the-mole-v1/spec.md` (rule 1)
 
 ### Q4. Clicking a whacked or hiding mole (game.rb)
 
@@ -67,7 +67,7 @@ A player double-clicks a mole. The first click is a hit. What does the second cl
 - C. It restarts the mole's rise animation.
 - D. It is ignored (returns `nil`, no score change); round 1's adversary showed a double click netted zero points, and round 2 changed it.
 
-Source: `lib/whack_the_mole/game.rb:82-91`, `docs/review/round-1-adversary.md` (new MINOR 1 and 2), `docs/review/round-2-fixes.md` (items 4 and 5)
+Source: `lib/whack_the_mole/game.rb:82-91`, `specs/001-whack-the-mole-v1/review/round-1-adversary.md` (new MINOR 1 and 2), `specs/001-whack-the-mole-v1/review/round-2-fixes.md` (items 4 and 5)
 
 ### Q5. How long a mole stays up (game.rb, round_timer.rb)
 
@@ -82,7 +82,7 @@ With `UP_MS_START = 1200` and `UP_MS_END = 600`, what is `up_ms` for a mole spaw
 - C. 900
 - D. 1200
 
-Source: `lib/whack_the_mole/game.rb:77`, `lib/whack_the_mole/round_timer.rb:20-22`, `docs/spec.md` (rule 3)
+Source: `lib/whack_the_mole/game.rb:77`, `lib/whack_the_mole/round_timer.rb:20-22`, `specs/001-whack-the-mole-v1/spec.md` (rule 3)
 
 ### Q6. The clock label (round_timer.rb)
 
@@ -93,7 +93,7 @@ The round starts 3000 ms after the title click. At 3500 ms (half a second into p
 - C. `0:60`
 - D. `0:59.5`
 
-Source: `lib/whack_the_mole/round_timer.rb:24-31`, `docs/review/tester-report.md` (Notes)
+Source: `lib/whack_the_mole/round_timer.rb:24-31`, `specs/001-whack-the-mole-v1/review/tester-report.md` (Notes)
 
 ### Q7. Which moles can be hit (mole.rb)
 
@@ -104,7 +104,7 @@ Source: `lib/whack_the_mole/round_timer.rb:24-31`, `docs/review/tester-report.md
 - C. Every phase except `:gone`
 - D. `:rising` and `:up`
 
-Source: `lib/whack_the_mole/mole.rb:47-49`, `docs/review/plan.md` (Mole section)
+Source: `lib/whack_the_mole/mole.rb:47-49`, `specs/001-whack-the-mole-v1/plan.md` (Mole section)
 
 ### Q8. Why moles store timestamps (mole.rb)
 
@@ -115,7 +115,7 @@ A `Mole` stores `spawned_at` and works out its phase and frame from `now`. It ne
 - C. Timestamps use less memory than an integer counter.
 - D. It lets `Mole` call `Gosu.milliseconds` directly without the window.
 
-Source: `lib/whack_the_mole/mole.rb:11-35`, `docs/spec.md` (rule 10), `docs/review/plan.md` (section 2, "Time model")
+Source: `lib/whack_the_mole/mole.rb:11-35`, `specs/001-whack-the-mole-v1/spec.md` (rule 10), `specs/001-whack-the-mole-v1/plan.md` (section 2, "Time model")
 
 ### Q9. The hammer's hit point (hammer.rb)
 
@@ -133,7 +133,7 @@ What is this for?
 - C. It clamps the mouse to the window so clicks outside it are ignored.
 - D. It converts screen pixels to grid row and column numbers.
 
-Source: `lib/whack_the_mole/hammer.rb:7-10`, `lib/whack_the_mole/game.rb:30`, `docs/spec.md` (rule 6)
+Source: `lib/whack_the_mole/hammer.rb:7-10`, `lib/whack_the_mole/game.rb:30`, `specs/001-whack-the-mole-v1/spec.md` (rule 6)
 
 ### Q10. Loading the best score (high_score.rb)
 
@@ -148,7 +148,7 @@ Which file content loads as a best score that is not 0?
 - C. `{"best":2.5}`
 - D. `[7]`
 
-Source: `lib/whack_the_mole/high_score.rb:29-34`, `docs/review/round-2-fixes.md` (item 2), `test/whack_the_mole/round2_behavior_test.rb`
+Source: `lib/whack_the_mole/high_score.rb:29-34`, `specs/001-whack-the-mole-v1/review/round-2-fixes.md` (item 2), `test/whack_the_mole/round2_behavior_test.rb`
 
 ### Q11. Atomic save (high_score.rb)
 
@@ -159,7 +159,7 @@ Source: `lib/whack_the_mole/high_score.rb:29-34`, `docs/review/round-2-fixes.md`
 - C. `JSON.generate` can only write to a new file.
 - D. If the game crashes mid-write, only the temp file is damaged; the rename swaps in a complete file, so the saved best is never left half-written (spec rule 8).
 
-Source: `lib/whack_the_mole/high_score.rb:36-43`, `docs/spec.md` (rule 8), `docs/review/plan.md` (HighScore section)
+Source: `lib/whack_the_mole/high_score.rb:36-43`, `specs/001-whack-the-mole-v1/spec.md` (rule 8), `specs/001-whack-the-mole-v1/plan.md` (HighScore section)
 
 ### Q12. Testing the high score without touching real data (tests)
 
@@ -170,7 +170,7 @@ The high-score tests never read or write `%APPDATA%\WhackTheMole\highscore.json`
 - C. `HighScore.new(path:)` takes the path as a keyword argument, so tests pass a file inside `Dir.mktmpdir` and delete it in `teardown`.
 - D. They run only on CI, where `APPDATA` does not exist.
 
-Source: `lib/whack_the_mole/high_score.rb:14-17`, `test/whack_the_mole/round2_behavior_test.rb`, `test/whack_the_mole/high_score_edge_cases_test.rb`, `docs/review/plan.md` (section 2)
+Source: `lib/whack_the_mole/high_score.rb:14-17`, `test/whack_the_mole/round2_behavior_test.rb`, `test/whack_the_mole/high_score_edge_cases_test.rb`, `specs/001-whack-the-mole-v1/plan.md` (section 2)
 
 ### Q13. Finding free holes (hole.rb)
 
@@ -185,7 +185,7 @@ free_holes = Hole.grid - moles.map(&:hole)
 - C. Array subtraction compares only the `x` coordinate.
 - D. It does not work; a mole can spawn in an occupied hole.
 
-Source: `lib/whack_the_mole/hole.rb:4-11`, `lib/whack_the_mole/game.rb:76`, `docs/review/plan.md` (Hole section)
+Source: `lib/whack_the_mole/hole.rb:4-11`, `lib/whack_the_mole/game.rb:76`, `specs/001-whack-the-mole-v1/plan.md` (Hole section)
 
 ### Q14. The floating "+1" (popup.rb)
 
@@ -207,7 +207,7 @@ Source: `lib/whack_the_mole/popup.rb:4-20`, `lib/whack_the_mole/window.rb:109-11
 - C. Keeping two counters makes `total` faster to compute.
 - D. The high score file stores hits and misses, not the total.
 
-Source: `lib/whack_the_mole/score.rb:4-23`, `docs/spec.md` (rules 4 and 7)
+Source: `lib/whack_the_mole/score.rb:4-23`, `specs/001-whack-the-mole-v1/spec.md` (rules 4 and 7)
 
 ### Q16. Choosing the thud pitch (window.rb)
 
@@ -222,7 +222,7 @@ How does the window know whether to play the normal or the low thud?
 - C. The window compares the score before and after the click.
 - D. The window checks whether the mouse is over a hole.
 
-Source: `lib/whack_the_mole/window.rb:31-37`, `lib/whack_the_mole/window.rb:94-97`, `docs/review/plan.md` (section 2, "Sound events")
+Source: `lib/whack_the_mole/window.rb:31-37`, `lib/whack_the_mole/window.rb:94-97`, `specs/001-whack-the-mole-v1/plan.md` (section 2, "Sound events")
 
 ### Q17. Missing images vs missing audio (window.rb)
 
@@ -247,7 +247,7 @@ Why does a missing PNG stop the game while a missing MP3 does not?
 - C. The spec says audio may be skipped silently, but the game can't run without its sprites; round 2 added a clear one-line message instead of a stack trace.
 - D. `abort` is used for images so the high score is saved before exiting.
 
-Source: `lib/whack_the_mole/window.rb:61-71`, `docs/spec.md` (rule 9), `docs/review/round-2-fixes.md` (item 7), `docs/review/round-1-adversary.md` (new MINOR 5)
+Source: `lib/whack_the_mole/window.rb:61-71`, `specs/001-whack-the-mole-v1/spec.md` (rule 9), `specs/001-whack-the-mole-v1/review/round-2-fixes.md` (item 7), `specs/001-whack-the-mole-v1/review/round-1-adversary.md` (new MINOR 5)
 
 ### Q18. Pressing R during the lockout (window.rb, round2_behavior_test.rb)
 
@@ -258,7 +258,7 @@ The round has just ended and the 1 s lockout is still running. The player presse
 - C. The R press is queued and runs when the lockout ends.
 - D. It counts as a miss on the old round.
 
-Source: `lib/whack_the_mole/window.rb:34`, `lib/whack_the_mole/window.rb:55-59`, `test/whack_the_mole/round2_behavior_test.rb` (`test_explicit_start_bypasses_lockout`), `docs/review/round-2-fixes.md` (items 1 and 3)
+Source: `lib/whack_the_mole/window.rb:34`, `lib/whack_the_mole/window.rb:55-59`, `test/whack_the_mole/round2_behavior_test.rb` (`test_explicit_start_bypasses_lockout`), `specs/001-whack-the-mole-v1/review/round-2-fixes.md` (items 1 and 3)
 
 ### Q19. Where Gosu is required (lib/whack_the_mole.rb, bin, test_helper.rb)
 
@@ -269,7 +269,7 @@ Source: `lib/whack_the_mole/window.rb:34`, `lib/whack_the_mole/window.rb:55-59`,
 - C. `bin/whack_the_mole` cannot use `require_relative`.
 - D. Only `window.rb` touches Gosu, so the tests load the game rules without opening a window or needing Gosu at all.
 
-Source: `lib/whack_the_mole.rb`, `bin/whack_the_mole`, `test/test_helper.rb`, `docs/review/plan.md` (section 2)
+Source: `lib/whack_the_mole.rb`, `bin/whack_the_mole`, `test/test_helper.rb`, `specs/001-whack-the-mole-v1/plan.md` (section 2)
 
 ### Q20. Tooling (Rakefile, Gemfile, .rubocop.yml, .gitignore)
 
@@ -280,7 +280,7 @@ Which statement about the tooling the agents set up is correct?
 - C. `.rubocop.yml` turns off `Style/FrozenStringLiteralComment` so files don't need the magic comment.
 - D. `rubocop-minitest` is in the Gemfile to make the test suite run faster.
 
-Source: `Rakefile`, `Gemfile`, `.rubocop.yml`, `.gitignore`, `docs/review/plan.md` (section 4, step 1), `docs/spec.md` (Repo hygiene)
+Source: `Rakefile`, `Gemfile`, `.rubocop.yml`, `.gitignore`, `specs/001-whack-the-mole-v1/plan.md` (section 4, step 1), `specs/001-whack-the-mole-v1/spec.md` (Repo hygiene)
 
 ---
 

@@ -41,13 +41,13 @@ Rationale: the same inputs always give the same game, so tests never flake.
 - Minitest only; files in `test/` mirror `lib/`.
 - Every rule in `lib/` (spawning, hiding, hit detection, scoring, timer, round end) MUST have
   a test before the round can be SATISFIED.
-- The tester writes tests from `docs/spec.md`, not from the implementation, and edits only
+- The tester writes tests from `specs/<feature>/spec.md`, not from the implementation, and edits only
   test code.
 - `window.rb` is covered by the smoke launch, not unit tests.
 
 ### V. Simplicity
 
-- YAGNI: build only what `docs/spec.md` asks for.
+- YAGNI: build only what `specs/<feature>/spec.md` asks for.
 - A new class is justified only when it owns state or a rule no existing class owns.
 - A new gem MUST be named in the plan with a reason the standard library or Gosu cannot do
   the job, and the user approves it before the coder adds it.
@@ -64,10 +64,13 @@ Rationale: the same inputs always give the same game, so tests never flake.
 
 ## Development Workflow
 
-Spec Kit artifacts feed the agent loop: `docs/spec.md` (or `/speckit-specify`) is the input,
-and the planner's `docs/review/plan.md` (or `plan-<feature>.md`) is the plan. State passes
-between agents only through files in `docs/review/`, never through chat, and the coder's
-reasoning is not shared with reviewers.
+Every feature or bug fix lives in its own Spec Kit folder, `specs/NNN-<name>/` (written here as
+`specs/<feature>/`), created by `/speckit-specify` along with a branch of the same name. It holds
+`spec.md` (the input), `plan.md` (written by the planner), optional `tasks.md` (from
+`/speckit-tasks`), and `review/` for every round, tester and assessment file. The orchestrator
+passes the feature folder to each agent. State passes between agents only through files in
+the feature folder, never through chat, and the coder's reasoning is not shared with reviewers.
+The v1 build is recorded in `specs/001-whack-the-mole-v1/`.
 
 1. **Plan**: `planner` (Eevee) runs once per phase or feature and writes the plan. It is never
    part of the revision loop.
@@ -91,17 +94,17 @@ reasoning is not shared with reviewers.
 
 Purpose: the developer understands what the agents built and why, without having written it.
 
-- Written to `docs/review/assessment.md` (or `assessment-<feature>.md`) after the Assess step.
+- Written to `specs/<feature>/review/assessment.md` after the Assess step.
 - Format: multiple choice only. Each question has 4 options (A-D) with exactly one correct
   answer.
 - Scope: MUST cover only what the agents developed in this phase or feature, i.e. the commits
-  made during this loop, the plan, and the decisions recorded in `docs/review/`. MUST NOT test
+  made during this loop, the plan, and the decisions recorded in `specs/<feature>/review/`. MUST NOT test
   general Ruby or Gosu knowledge, code that existed before the loop, or anything outside the
   diff.
 - Coverage: every file added or materially changed gets at least one question. Questions
   cover both *what* (what a class or method does, where a rule lives) and *why* (why a design
   choice was made, citing the plan, a review finding, or a verdict item that drove it).
-- Each question cites the file and line or the `docs/review/` file it is based on.
+- Each question cites the file and line or the review file it is based on.
 - An answer key follows the questions, separated under its own heading. Each answer gives the
   correct letter and a 1-3 sentence explanation of why it is right and why the most tempting
   wrong option is wrong.
@@ -134,4 +137,4 @@ refactors. Minor items are logged in the verdict but do not trigger a new round.
 - Compliance: reviewer, adversary, and gatekeeper check every round against these principles;
   the gatekeeper's verdict names any violation as blocking.
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-13 | **Last Amended**: 2026-11-13
+**Version**: 1.1.0 | **Ratified**: 2026-11-13 | **Last Amended**: 2026-11-13

@@ -1,6 +1,6 @@
 # Round 2 required items (user-approved fix of deferred minors)
 
-Read docs/review/round-1-verdict.md for context on each. Fix all, keep changes small, add tests, keep spec rules intact (check docs/spec.md; if a fix conflicts with it, stop and say so).
+Read specs/001-whack-the-mole-v1/review/round-1-verdict.md for context on each. Fix all, keep changes small, add tests, keep spec rules intact (check specs/001-whack-the-mole-v1/spec.md; if a fix conflicts with it, stop and say so).
 
 1. Game-over click restarts instantly: ignore clicks for a short lockout (Config constant, ~1000 ms) after the round ends; R key still restarts immediately.
 2. HighScore: a negative or non-integer stored best loads as 0 (high_score.rb:31).

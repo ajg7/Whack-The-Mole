@@ -347,7 +347,7 @@ The assertions you'll use most:
 - **[O2.14]** Use RuboCop to keep a consistent style: run it, autofix, read an offense, and explain the project's `.rubocop.yml` choices.
 
 ### Read
-`.rubocop.yml`, `docs/review/tester-report.md` (how the tester wrote tests from the spec, not the code), the git log (`git log --oneline`).
+`.rubocop.yml`, `specs/001-whack-the-mole-v1/review/tester-report.md` (how the tester wrote tests from the spec, not the code), the git log (`git log --oneline`).
 
 ### Concept
 **Test-driven development (TDD)** is a loop:
@@ -358,7 +358,7 @@ The assertions you'll use most:
 
 Then repeat with the next behavior. The tests end up describing exactly what the code does, and each piece of code exists because a test needed it.
 
-**Writing tests from the spec, not the code** catches a different class of bug: misunderstandings. The `tester` agent in this repo wrote tests from `docs/spec.md` without looking at the implementation, so its tests checked what the game *should* do.
+**Writing tests from the spec, not the code** catches a different class of bug: misunderstandings. The `tester` agent in this repo wrote tests from `specs/001-whack-the-mole-v1/spec.md` without looking at the implementation, so its tests checked what the game *should* do.
 
 **RuboCop** checks style and some likely bugs. Run `bundle exec rubocop`; fix automatically with `bundle exec rubocop -a` (safe fixes only). Each offense names a cop, like `Style/StringLiterals` or `Metrics/MethodLength`. Look it up when you don't understand it; the docs give the reason.
 
