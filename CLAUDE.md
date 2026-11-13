@@ -34,7 +34,7 @@ Ruby is not installed on this machine yet. Install Ruby 3.3+ with DevKit (RubyIn
 
 ## Workflow: build and review loop
 
-Substantial work runs through six subagents defined in `.claude/agents/`: `planner` (Eevee), `coder` (Flareon), `reviewer` (Jolteon), `adversary` (Vaporeon), `gatekeeper` (Espeon), and `tester` (Umbreon). The main session orchestrates; it does not write the code itself.
+The rules here summarize `.specify/memory/constitution.md`, which wins on conflict. Substantial work runs through seven subagents defined in `.claude/agents/`: `planner` (Eevee), `coder` (Flareon), `reviewer` (Jolteon), `adversary` (Vaporeon), `gatekeeper` (Espeon), `tester` (Umbreon), and `assesser` (Slowbro). The main session orchestrates; it does not write the code itself.
 
 Before round 1 of a phase or feature, run `planner` (Eevee) once. It reads `docs/spec.md` and the repo and writes `docs/review/plan.md` (or `plan-<feature>.md`). The planner is never part of the revision loop.
 
@@ -45,6 +45,8 @@ Each round N (max 3):
 4. `gatekeeper` (Espeon) runs the checks and writes `docs/review/round-N-verdict.md`, whose first line is `VERDICT: SATISFIED` or `VERDICT: REVISE`.
 
 After a `VERDICT: SATISFIED`, run `tester` (Umbreon) once. It writes tests from `docs/spec.md` (not from the implementation), edits only test code, and writes `docs/review/tester-report.md`. If it reports BLOCKING bugs, treat them as the required items of a new round (back to `coder`, then the usual reviewer/adversary/gatekeeper, then `tester` again) while rounds remain under the cap; otherwise escalate to the user. Tester work does not get its own extra rounds beyond the cap of 3.
+
+Once the tester reports no BLOCKING bugs, run `assesser` (Slowbro) once, passing the base commit from before round 1. It writes a multiple-choice assessment with an answer key to `docs/review/assessment.md` (or `assessment-<feature>.md`), covering only what the agents built in this loop and why. The phase or feature is not complete until the assessment exists.
 
 Definition of satisfied: `bundle exec rake test` and `bundle exec rubocop` pass, the smoke launch runs without crashing, and the only remaining issues are minor and non-blocking.
 
